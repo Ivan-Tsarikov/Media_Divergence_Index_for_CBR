@@ -1,0 +1,81 @@
+user_agent: "mdi-collector/0.1 (+https://github.com/Ivan-Tsarikov/Media_Divergence_Index_for_CBR)"
+request_timeout_s: 20
+sleep_s: 1.0
+retries:
+  total: 3
+  backoff_factor: 0.5
+  status_forcelist: [429, 500, 502, 503, 504]
+cache:
+  enabled: true
+  backend: "sqlite"
+  expire_after_s: 86400
+
+window_days:
+  before: 1
+  after: 2
+
+relevance:
+  keyrate_regex: "ключев\\w*\\s+ставк\\w*"
+  cbr_regex: "(Банк\\s+России|ЦБ|центробанк)"
+  decision_regex: "(совет\\s+директор[а-я]*|решени|повысил|снизил|сохранил)"
+  cbr_lede_chars: 600
+
+output:
+  save_raw_html: false
+
+sources:
+  rt:
+    enabled: true
+    search_url: "https://russian.rt.com/search"
+    query: "ключевая ставка"
+    page_size: 50
+    max_pages: 10
+    allow_domains: ["russian.rt.com"]
+    deny_url_regex:
+      - "/tag/"
+      - "/topics/"
+  fontanka:
+    enabled: true
+    tag_url: "https://www.fontanka.ru/tags/ключевая-ставка/"
+    max_pages: 5
+    allow_domains: ["www.fontanka.ru"]
+    deny_url_regex:
+      - "/tags/"
+  vedomosti:
+    enabled: true
+    archive_url: "https://www.vedomosti.ru/archive/{yyyy}/{mm}/{dd}"
+    allow_article_regex: "/articles/\\d{4}/\\d{2}/\\d{2}/"
+    max_days_per_event: 4
+    allow_domains: ["www.vedomosti.ru"]
+    deny_url_regex:
+      - "/press_releases/"
+  sitemap:
+    enabled: true
+    max_urls_per_event: 200
+    sources:
+      rbc:
+        sitemap_url: "https://www.rbc.ru/sitemap.xml"
+        allow_domains: ["www.rbc.ru"]
+        deny_url_regex:
+          - "/tags/"
+          - "/economics"
+      gazeta:
+        sitemap_url: "https://www.gazeta.ru/sitemap.xml"
+        allow_domains: ["www.gazeta.ru"]
+        deny_url_regex:
+          - "/tags/"
+      izvestia:
+        sitemap_url: "https://iz.ru/sitemap.xml"
+        allow_domains: ["iz.ru"]
+        deny_url_regex:
+          - "/tags/"
+      kommersant:
+        sitemap_url: "https://www.kommersant.ru/sitemap.xml"
+        allow_domains: ["www.kommersant.ru"]
+        deny_url_regex:
+          - "/themes/"
+      vedomosti:
+        sitemap_url: "https://www.vedomosti.ru/sitemap.xml"
+        allow_domains: ["www.vedomosti.ru"]
+        deny_url_regex:
+          - "/press_releases/"
