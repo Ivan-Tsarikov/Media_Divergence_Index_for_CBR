@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "title": "MDI Annotation Schema",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "event_id",
+    "doc_id",
+    "source_type",
+    "source_name",
+    "stance",
+    "strength",
+    "reasons",
+    "mentions_fg",
+    "evidence"
+  ],
+  "properties": {
+    "event_id": { "type": "string", "minLength": 1 },
+    "doc_id": { "type": "string", "minLength": 1 },
+    "source_type": { "type": "string", "enum": ["cbr", "media"] },
+    "source_name": {
+      "type": "string",
+      "enum": ["cbr", "rt", "rbc", "gazeta", "fontanka", "kommersant", "izvestia", "vedomosti"]
+    },
+    "stance": { "type": "string", "enum": ["hawkish", "dovish", "neutral"] },
+    "strength": { "type": "integer", "minimum": 0, "maximum": 2 },
+    "reasons": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": ["inflation", "expectations", "demand_credit", "fx_external", "fiscal", "finstab"]
+      },
+      "minItems": 0,
+      "maxItems": 2,
+      "uniqueItems": true
+    },
+    "mentions_fg": { "type": "boolean" },
+    "evidence": {
+      "type": "array",
+      "items": { "type": "string", "minLength": 1 },
+      "minItems": 1,
+      "maxItems": 3
+    },
+    "notes": { "type": "string" },
+    "annotator": { "type": "string" },
+    "annotation_time_utc": { "type": "string" }
+  }
+}

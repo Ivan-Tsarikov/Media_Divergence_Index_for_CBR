@@ -1,0 +1,33 @@
+provider: gigachat
+
+gigachat:
+  # credentials берем из env GIGACHAT_CREDENTIALS, но можно прописать и тут (не рекомендую)
+  verify_ssl_certs: false
+  model: "GigaChat"
+  temperature: 0.0
+  request_sleep_sec: 1.5
+  request_retries: 4
+  backoff_base_sec: 5.0
+  timeout_sec: 90
+  scope: "GIGACHAT_API_PERS"
+
+io:
+  input_path: "data/documents_raw.xlsx"
+  output_path: "data/out/annotations.csv"
+
+  # маппинг колонок входной таблицы -> ожидаемые поля
+  columns:
+    event_id: "event_id"
+    doc_id: "doc_id"
+    source_type: "source_type"     # "cbr" | "media"
+    source_name: "source_name"     # "cbr.ru" | "rbc.ru" | ...
+    published_at: "published_at"   # опционально
+    title: "title"
+    lead: "lead"
+    text: "text_raw"               # или как у вас назван полный текст
+
+annotation:
+  max_chars: 3500         # сколько символов текста давать модели
+  max_retries: 3          # сколько раз пытаться чинить JSON
+  concurrency: 1          # параллелизм (осторожно с лимитами API)
+  annotator_name: "gigachat_llm"
