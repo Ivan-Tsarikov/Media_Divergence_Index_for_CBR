@@ -5,7 +5,11 @@ gigachat:
   verify_ssl_certs: false
   model: "GigaChat"
   temperature: 0.0
-  timeout_sec: 60
+  request_sleep_sec: 1.5
+  request_retries: 4
+  backoff_base_sec: 5.0
+  timeout_sec: 90
+  scope: "GIGACHAT_API_PERS"
 
 io:
   input_path: "data/documents_raw.xlsx"
@@ -23,7 +27,7 @@ io:
     text: "text_raw"               # или как у вас назван полный текст
 
 annotation:
-  max_chars: 8000         # сколько символов текста давать модели
-  max_retries: 2          # сколько раз пытаться чинить JSON
-  concurrency: 2          # параллелизм (осторожно с лимитами API)
+  max_chars: 3500         # сколько символов текста давать модели
+  max_retries: 3          # сколько раз пытаться чинить JSON
+  concurrency: 1          # параллелизм (осторожно с лимитами API)
   annotator_name: "gigachat_llm"
