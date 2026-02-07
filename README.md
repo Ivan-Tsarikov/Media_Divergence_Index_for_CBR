@@ -14,6 +14,7 @@
 **Ключевой результат:** `data/out/mdi_outputs.xlsx` (листы `mdi_by_event`, `media_qc_by_doc`).
 
 ## 2) Данные
+Примеры файлов лежат в папке `data`.
 
 ### На входе
 По умолчанию `configs/annotate.yaml` использует `data/documents_raw.xlsx`.
