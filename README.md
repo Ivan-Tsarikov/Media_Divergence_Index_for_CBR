@@ -60,7 +60,7 @@ python -m mdi.cases.run --ann data/out/annotations.csv --mdi_xlsx data/out/mdi_o
 ```mermaid
 flowchart TD
   A[CBR events file:  <br> cbr_event.xlsx] --> B[Build documents_raw]
-  C[News articles file: news_v2.xlsx] --> B
+  C[News articles' texts] --> B
   D[CBR doc texts] --> B
 
   B --> E[documents_raw.xlsx]
